@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Get Book</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align form to the top */
+            height: 100vh; /* Full viewport height */
+            background-color: #f8f9fa; /* Light background for contrast */
+        }
+        .form-container {
+            margin-top: 20px; /* Space from the top */
+            width: 300px; /* Set a consistent width for the form */
+        }
+        .form-container .form-group {
+            margin-bottom: 15px;
+        }
+        .form-container .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+         .form-container .button-container {
+                    display: flex;
+                    justify-content: space-between; /* Position buttons side by side */
+                }
+                .form-container button {
+                    width: 48%; /* Ensure buttons are not too wide */
+                }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <form id="bookForm" action="userviewavailablebook.html" method="get">
+        <div class="form-group">
+            <label for="name1">Book Name</label>
+            <input type="text" class="form-control" name="name" id="name1" placeholder="Enter book name" required/>
+        </div>
+
+        <div class="button-container">
+            <button type="button" class="btn btn-secondary" onclick="window.location.href='userpage.html'">Back</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+<script src="jquery.min.js"></script>
+<script src="bootstrap.min.js"></script>
+</body>
+</html>

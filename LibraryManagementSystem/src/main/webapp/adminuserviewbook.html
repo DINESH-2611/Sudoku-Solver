@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Users</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        #backButton {
+            margin-top: 20px;
+            display: block;
+            width: 150px;
+            margin-left: auto;
+            margin-right: auto;  /* Center the button */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 id="heading" style="display: none;">List of Books</h2>
+    <table id="userTable" style="display: none;" class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Book name</th>
+            <th>Author</th>
+            <th>Publisher</th>
+            <th>Quantity</th>
+        </tr>
+        </thead>
+        <tbody id="userTableBody">
+        <!-- Data will be dynamically injected here -->
+        </tbody>
+    </table>
+    <button id="backButton"  style="display:none" class="btn btn-secondary">Back</button>
+</div>
+<script>
+    // Fetch data from the servlet
+    fetch('ViewBook')
+        .then(response => {
+            if (response.redirected) {
+                // If redirected, navigate to the new URL
+                window.location.href = response.url;
+            } else {
+                return response.json(); // Parse the JSON response
+            }
+        })
+        .then(data => {
+            if (data) {
+                const users = data.books; // Access the users array
+                const tableBody = document.getElementById('userTableBody');
+                const table = document.getElementById('userTable');
+                const heading = document.getElementById('heading');
+
+                if (users && users.length > 0) {
+                    table.style.display = 'table';
+                    heading.style.display = 'block';
+                    backButton.style.display = 'block';
+                    // Populate the table with user data
+                    users.forEach(user => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${user.id}</td>
+                            <td>${user.name}</td>
+                            <td>${user.author}</td>
+                            <td>${user.publisher}</td>
+                            <td>${user.quantity}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching users:', error);
+        });
+     document.getElementById('backButton').addEventListener('click', function() {
+        // Check the referring page to decide where to go
+        if (document.referrer.includes('adminpage.html')) {
+            window.location.href = 'adminpage.html';  // Redirect to admin page
+        } else {
+            window.location.href = 'userpage.html';  // Redirect to user page
+        }
+    });
+</script>
+</body>
+</html>
